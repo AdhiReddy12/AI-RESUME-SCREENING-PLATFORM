@@ -21,6 +21,15 @@
       color: var(--ink);
       min-height: 100vh;
     }
+    
+    /* Hide scrollbars but keep scrolling functionality */
+    ::-webkit-scrollbar {
+      display: none;
+    }
+    * {
+      -ms-overflow-style: none;  /* IE and Edge */
+      scrollbar-width: none;  /* Firefox */
+    }
 
     /* ── Auth ─────────────────────────────────── */
     .auth-wrap {
