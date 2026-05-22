@@ -44,7 +44,7 @@ export function Candidates({ initialJob }) {
     e.stopPropagation();
     if (!window.confirm('Are you sure you want to delete this candidate?')) return;
     try {
-      await api.delete(`/resumes/result/${id}`);
+      await api.del(`/resumes/result/${id}`);
       setResults(p => p.filter(r => r.id !== id));
       if (selected?.id === id) setSelected(null);
       toast('Candidate deleted');
