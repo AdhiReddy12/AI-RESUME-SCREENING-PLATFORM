@@ -47,6 +47,11 @@ public class ResumeController {
         return screenRepo.findByJobIdOrderByOverallScoreDesc(jobId);
     }
 
+    @GetMapping("/results")
+    public List<ScreeningResult> allResults() {
+        return screenRepo.findAllByOrderByOverallScoreDesc();
+    }
+
     @GetMapping("/result/{id}")
     public ResponseEntity<ScreeningResult> result(@PathVariable Long id) {
         return screenRepo.findById(id)

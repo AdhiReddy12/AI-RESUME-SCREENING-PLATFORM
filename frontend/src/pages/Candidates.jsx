@@ -15,7 +15,6 @@ export function Candidates({ initialJob }) {
   useEffect(() => {
     api.get('/jobs').then(d => {
       setJobs(d);
-      if (!selectedJob && d[0]) setSelectedJob(String(d[0].id));
     }).catch(()=>{});
   }, []);
 
@@ -24,9 +23,9 @@ export function Candidates({ initialJob }) {
   }, [initialJob]);
 
   useEffect(() => {
-    if (!selectedJob) return;
     setLoading(true);
-    api.get(`/resumes/job/${selectedJob}/results`)
+    const endpoint = selectedJob ? `/resumes/job/${selectedJob}/results` : '/resumes/results';
+    api.get(endpoint)
        .then(d => { setResults(d); setLoading(false); })
        .catch(() => setLoading(false));
   }, [selectedJob]);
@@ -53,7 +52,7 @@ export function Candidates({ initialJob }) {
 
   const resetFilters = () => {
     setFilterStatus('ALL');
-    if (jobs.length > 0) setSelectedJob(String(jobs[0].id));
+    setSelectedJob('');
   };
 
   const filtered = filterStatus === 'ALL' ? results : results.filter(r => r.status === filterStatus);

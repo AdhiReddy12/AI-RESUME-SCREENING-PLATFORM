@@ -10,6 +10,8 @@ public interface ScreeningResultRepository extends JpaRepository<ScreeningResult
 
     List<ScreeningResult> findByJobIdOrderByOverallScoreDesc(Long jobId);
 
+    List<ScreeningResult> findAllByOrderByOverallScoreDesc();
+
     Optional<ScreeningResult> findByResumeId(Long resumeId);
 
     long countByJobIdAndStatus(Long jobId, ScreeningResult.CandidateStatus status);
