@@ -69,11 +69,3 @@ Experience: years vs min requirement, capped at 100
 Education:  PhD=1.0, Masters=0.9, Bachelors=0.8, Diploma=0.6
 Keywords:   JD keyword density × 150, capped at 100
 ```
-
-## Default Users
-
-| Email                    | Password | Role           |
-|--------------------------|----------|----------------|
-| hr@resumeai.com          | password | ADMIN          |
-| recruiter@resumeai.com   | password | RECRUITER      |
-| manager@resumeai.com     | password | HIRING_MANAGER |
