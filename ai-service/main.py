@@ -163,14 +163,29 @@ def parse_contact(text: str) -> dict:
     phone    = CONTACT_PATTERNS["phone"].search(text)
     linkedin = CONTACT_PATTERNS["linkedin"].search(text)
 
-    # Naive name extraction: first non-empty line that looks like a name
+    # Improved name extraction: 
+    # Check the first few lines for something that looks like a name.
+    # Exclude common resume headers and keywords.
     name = ""
-    for line in text.splitlines():
-        line = line.strip()
-        if line and re.match(r"^[A-Z][a-z]+(?: [A-Z][a-z]+)+$", line):
-            name = line
-            break
-
+    bad_keywords = {"resume", "curriculum", "vitae", "skills", "experience", "education", 
+                    "profile", "summary", "project", "university", "college", "platform", 
+                    "personal", "details", "contact", "technical", "objective", "work"}
+    
+    lines = [line.strip() for line in text.splitlines() if line.strip()]
+    for line in lines[:15]:  # Look at the first 15 non-empty lines
+        # Ignore lines with common bad keywords
+        line_lower = line.lower()
+        if any(bad in line_lower for bad in bad_keywords):
+            continue
+            
+        # Count words, typically names are 2 to 4 words
+        words = line.split()
+        if 2 <= len(words) <= 4:
+            # Check if line contains only letters, spaces, periods, or dashes
+            if re.match(r"^[A-Za-z\s\.\-]+$", line):
+                name = line
+                break
+                
     return {
         "name":     name,
         "email":    email.group() if email else "",

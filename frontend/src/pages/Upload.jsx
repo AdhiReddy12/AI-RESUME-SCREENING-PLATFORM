@@ -82,7 +82,10 @@ export function Upload() {
           <div className="upload-label">Drop resumes here</div>
           <div className="upload-sub">or click to browse · PDF, DOCX · max 20MB each</div>
           <input ref={inputRef} type="file" multiple accept=".pdf,.docx" className="upload-input"
-                 onChange={e => addFiles(e.target.files)} />
+                 onChange={e => {
+                   addFiles(e.target.files);
+                   e.target.value = null;
+                 }} />
         </div>
 
         {files.length > 0 && (
