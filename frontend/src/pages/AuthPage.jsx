@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import VisibilityIcon from '@mui/icons-material/Visibility';
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
+import IconButton from '@mui/material/IconButton';
 import { API_BASE } from '../api';
 import { Toast } from '../components/Toast';
 
@@ -9,6 +12,7 @@ export function AuthPage({ onLogin }) {
   const [fullName, setFullName] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
 
   const submit = async () => {
     setLoading(true); setError('');
@@ -61,8 +65,16 @@ export function AuthPage({ onLogin }) {
                    onKeyDown={e=>e.key==='Enter'&&submit()} />
             
             <div className="field-label">Password</div>
-            <input className="field-input" placeholder="Enter your password" type="password" value={password}
-                   onChange={e=>setPassword(e.target.value)} onKeyDown={e=>e.key==='Enter'&&submit()} />
+            <div style={{ position: 'relative' }}>
+              <input className="field-input" placeholder="Enter your password" type={showPassword ? "text" : "password"} value={password}
+                     onChange={e=>setPassword(e.target.value)} onKeyDown={e=>e.key==='Enter'&&submit()} />
+              <IconButton 
+                onClick={() => setShowPassword(!showPassword)}
+                style={{ position: 'absolute', right: 0, top: '2px', color: 'rgba(255,255,255,0.5)' }}
+              >
+                {showPassword ? <VisibilityOffIcon fontSize="small" /> : <VisibilityIcon fontSize="small" />}
+              </IconButton>
+            </div>
 
             <button className="btn-primary" onClick={submit} disabled={loading}>
               {loading ? <span className="spinner" /> : (isLogin ? 'Sign in' : 'Create an account')}
