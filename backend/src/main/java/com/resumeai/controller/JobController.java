@@ -52,6 +52,7 @@ public class JobController {
             j.setEducationLevel(updates.getEducationLevel());
             j.setKeywords(updates.getKeywords());
             j.setShortlistThreshold(updates.getShortlistThreshold());
+            j.setRejectionThreshold(updates.getRejectionThreshold());
             j.setStatus(updates.getStatus());
             return ResponseEntity.ok(jobRepo.save(j));
         }).orElse(ResponseEntity.notFound().build());
