@@ -106,9 +106,12 @@ public class ResumeService {
         double overall = toDouble(ai.get("overall_score"));
         
         ScreeningResult.CandidateStatus status;
-        if (overall >= job.getShortlistThreshold()) {
+        int shortlistThreshold = job.getShortlistThreshold() != null ? job.getShortlistThreshold() : 70;
+        int rejectionThreshold = job.getRejectionThreshold() != null ? job.getRejectionThreshold() : 40;
+        
+        if (overall >= shortlistThreshold) {
             status = ScreeningResult.CandidateStatus.SHORTLISTED;
-        } else if (overall < job.getRejectionThreshold()) {
+        } else if (overall < rejectionThreshold) {
             status = ScreeningResult.CandidateStatus.REJECTED;
         } else {
             status = ScreeningResult.CandidateStatus.SCREENED;
