@@ -15,6 +15,8 @@ public class AuthDtos {
         private String email;
         private String password;
         private String fullName;
+        private String companyName;
+        private String contactNumber;
     }
 
     @Data
@@ -23,12 +25,19 @@ public class AuthDtos {
         private String email;
         private String fullName;
         private String role;
+        private String profilePicture;
+        private String companyName;
+        private String contactNumber;
 
-        public LoginResponse(String token, String email, String fullName, String role) {
+        public LoginResponse(String token, String email, String fullName, String role, 
+                             String profilePicture, String companyName, String contactNumber) {
             this.token = token;
             this.email = email;
             this.fullName = fullName;
             this.role = role;
+            this.profilePicture = profilePicture;
+            this.companyName = companyName;
+            this.contactNumber = contactNumber;
         }
     }
 }

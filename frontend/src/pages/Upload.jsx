@@ -1,4 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
+import { TailChase } from 'ldrs/react';
+import 'ldrs/react/TailChase.css';
 import { api } from '../api';
 import { toast } from '../utils/toast';
 import { ScoreBar } from '../components/ScoreBar';
@@ -16,10 +18,13 @@ export function Upload() {
     api.get('/jobs').then(data => { setJobs(data); if(data[0]) setSelectedJob(String(data[0].id)); }).catch(()=>{});
   }, []);
 
-  const addFiles = f => setFiles(p => {
-    const existing = new Set(p.map(x => x.name));
-    return [...p, ...[...f].filter(x => !existing.has(x.name) && (x.name.endsWith('.pdf')||x.name.endsWith('.docx')))];
-  });
+  const addFiles = f => {
+    const newFiles = Array.from(f);
+    setFiles(p => {
+      const existing = new Set(p.map(x => x.name));
+      return [...p, ...newFiles.filter(x => !existing.has(x.name) && (x.name.toLowerCase().endsWith('.pdf')||x.name.toLowerCase().endsWith('.docx')))];
+    });
+  };
 
   const onDrop = e => {
     e.preventDefault(); setDragging(false);
@@ -104,7 +109,7 @@ export function Upload() {
         {files.length > 0 && (
           <div style={{ marginTop: 20, display:'flex', gap: 12, alignItems: 'center' }}>
             <button className="btn btn-dark" onClick={upload} disabled={uploading || !selectedJob}>
-              {uploading ? <><span className="spinner" style={{marginRight:8}} /> Screening…</> : `Screen ${files.length} Resume${files.length>1?'s':''}`}
+              {uploading ? <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}><TailChase size="20" speed="1.75" color="white" /> Screening…</div> : `Screen ${files.length} Resume${files.length>1?'s':''}`}
             </button>
             <button className="btn btn-outline" onClick={() => setFiles([])}>Clear All</button>
           </div>

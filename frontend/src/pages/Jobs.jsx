@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+import { TailChase } from 'ldrs/react';
+import 'ldrs/react/TailChase.css';
 import { api } from '../api';
 import { toast } from '../utils/toast';
 
@@ -52,7 +54,7 @@ export function Jobs({ onSelectJob }) {
         <button className="btn btn-dark" onClick={openCreate}>+ New Job</button>
       </div>
 
-      {loading ? <div className="loading-overlay"><span className="spinner" /></div> :
+      {loading ? <div className="loading-overlay"><TailChase size="40" speed="1.75" color="black" /></div> :
        jobs.length === 0 ? <div className="empty-state"><div className="empty-icon">💼</div><div className="empty-text">No jobs yet</div></div> : (
         <div className="jobs-grid">
           {jobs.map(j => (

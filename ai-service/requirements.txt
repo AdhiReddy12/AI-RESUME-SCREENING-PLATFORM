@@ -3,3 +3,4 @@ uvicorn[standard]
 PyMuPDF
 python-docx
 pydantic
+slowapi

@@ -25,7 +25,8 @@ public class AuthController {
                 .map(u -> ResponseEntity.ok(
                         new LoginResponse(
                                 jwtUtils.generateToken(u.getEmail()),
-                                u.getEmail(), u.getFullName(), u.getRole().name()
+                                u.getEmail(), u.getFullName(), u.getRole().name(),
+                                u.getProfilePicture(), u.getCompanyName(), u.getContactNumber()
                         )
                 ))
                 .orElse(ResponseEntity.status(401).build());
@@ -41,6 +42,8 @@ public class AuthController {
         newUser.setEmail(req.getEmail());
         newUser.setPassword(passwordEncoder.encode(req.getPassword()));
         newUser.setFullName(req.getFullName());
+        newUser.setCompanyName(req.getCompanyName());
+        newUser.setContactNumber(req.getContactNumber());
         newUser.setRole(User.Role.RECRUITER);
         
         userRepo.save(newUser);
@@ -48,7 +51,8 @@ public class AuthController {
         return ResponseEntity.ok(
                 new LoginResponse(
                         jwtUtils.generateToken(newUser.getEmail()),
-                        newUser.getEmail(), newUser.getFullName(), newUser.getRole().name()
+                        newUser.getEmail(), newUser.getFullName(), newUser.getRole().name(),
+                        newUser.getProfilePicture(), newUser.getCompanyName(), newUser.getContactNumber()
                 )
         );
     }
@@ -59,6 +63,7 @@ public class AuthController {
         // user is set by the filter if JWT is valid
         if (user == null) return ResponseEntity.status(401).build();
         return ResponseEntity.ok(new LoginResponse(null, user.getEmail(),
-                user.getFullName(), user.getRole().name()));
+                user.getFullName(), user.getRole().name(),
+                user.getProfilePicture(), user.getCompanyName(), user.getContactNumber()));
     }
 }

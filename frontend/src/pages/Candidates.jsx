@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { TailChase } from 'ldrs/react';
+import 'ldrs/react/TailChase.css';
 import { api } from '../api';
 import { toast } from '../utils/toast';
 import { ScoreBar } from '../components/ScoreBar';
@@ -105,7 +107,7 @@ export function Candidates({ initialJob }) {
       </div>
 
       <div className="card">
-        {loading ? <div className="loading-overlay"><span className="spinner" /></div> :
+        {loading ? <div className="loading-overlay"><TailChase size="40" speed="1.75" color="black" /></div> :
          filtered.length === 0 ? <div className="empty-state"><div className="empty-icon">👤</div><div className="empty-text">No candidates found</div></div> : (
           <div className="table-wrap">
             <table>

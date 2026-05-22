@@ -25,6 +25,15 @@ public class User {
     @Column(name = "full_name", nullable = false)
     private String fullName;
 
+    @Column(name = "profile_picture", length = 1000)
+    private String profilePicture;
+
+    @Column(name = "company_name")
+    private String companyName;
+
+    @Column(name = "contact_number", length = 50)
+    private String contactNumber;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Role role;

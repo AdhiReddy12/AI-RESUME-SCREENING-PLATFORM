@@ -38,6 +38,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
                             List.of(new SimpleGrantedAuthority("ROLE_" + user.getRole().name()))
                     );
                     SecurityContextHolder.getContext().setAuthentication(auth);
+                    req.setAttribute("currentUser", user);
                 });
             }
         }

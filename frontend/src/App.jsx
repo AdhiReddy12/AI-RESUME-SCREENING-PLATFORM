@@ -2,11 +2,14 @@ import { useState, lazy, Suspense } from 'react';
 import { api } from './api';
 import { Toast } from './components/Toast';
 import { AuthPage } from './pages/AuthPage';
+import { TailChase } from 'ldrs/react';
+import 'ldrs/react/TailChase.css';
 
 const Dashboard = lazy(() => import('./pages/Dashboard').then(m => ({ default: m.Dashboard })));
 const Jobs = lazy(() => import('./pages/Jobs').then(m => ({ default: m.Jobs })));
 const Upload = lazy(() => import('./pages/Upload').then(m => ({ default: m.Upload })));
 const Candidates = lazy(() => import('./pages/Candidates').then(m => ({ default: m.Candidates })));
+const Profile = lazy(() => import('./pages/Profile').then(m => ({ default: m.Profile })));
 
 export function App() {
   const [auth, setAuth] = useState(() => {
@@ -46,7 +49,7 @@ export function App() {
     { id:'candidates', icon:'◎', label:'Candidates' },
   ];
 
-  const initials = (name) => name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2);
+  const initials = (name) => name ? name.split(' ').map(w=>w[0]).join('').toUpperCase().slice(0,2) : '';
 
   return (
     <div className="app-shell">
@@ -62,8 +65,14 @@ export function App() {
           ))}
         </div>
         <div className="sidebar-user">
-          <div className="user-avatar">{initials(auth.fullName||auth.email)}</div>
-          <div className="user-info">
+          <div className="user-avatar" style={{ cursor: 'pointer', overflow: 'hidden' }} onClick={() => setPage('profile')}>
+            {auth.profilePicture ? (
+              <img src={`http://localhost:8080${auth.profilePicture}`} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+            ) : (
+              initials(auth.fullName || auth.email)
+            )}
+          </div>
+          <div className="user-info" style={{ cursor: 'pointer' }} onClick={() => setPage('profile')}>
             <div className="user-name">{auth.fullName}</div>
             <div className="user-role">{auth.role}</div>
           </div>
@@ -72,12 +81,13 @@ export function App() {
       </nav>
 
       <main className="main-content">
-        <Suspense fallback={<div className="loader-container"><div className="loader"></div></div>}>
+        <Suspense fallback={<div className="loader-container"><TailChase size="40" speed="1.75" color="var(--ink)" /></div>}>
           <div key={page} className="page-reveal">
             {page === 'dashboard'  && <Dashboard />}
             {page === 'jobs'       && <Jobs onSelectJob={goToCandidates} />}
             {page === 'upload'     && <Upload />}
             {page === 'candidates' && <Candidates initialJob={jobForCandidates} />}
+            {page === 'profile'    && <Profile auth={auth} setAuth={setAuth} />}
           </div>
         </Suspense>
       </main>

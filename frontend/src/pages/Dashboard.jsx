@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react';
 import { api } from '../api';
 import Chart from 'chart.js/auto';
+import { TailChase } from 'ldrs/react';
+import 'ldrs/react/TailChase.css';
 
 export function Dashboard() {
   const [stats, setStats] = useState(null);
@@ -58,7 +60,7 @@ export function Dashboard() {
     }
   }, [stats]);
 
-  if (!stats) return <div className="loading-overlay"><span className="spinner" /></div>;
+  if (!stats) return <div className="loading-overlay"><TailChase size="40" speed="1.75" color="black" /></div>;
 
   return (
     <div>
