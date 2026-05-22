@@ -39,6 +39,22 @@ export function Candidates({ initialJob }) {
     } catch(e) { toast(e.message, 'error'); }
   };
 
+  const deleteCandidate = async (id, e) => {
+    e.stopPropagation();
+    if (!window.confirm('Are you sure you want to delete this candidate?')) return;
+    try {
+      await api.delete(`/resumes/result/${id}`);
+      setResults(p => p.filter(r => r.id !== id));
+      if (selected?.id === id) setSelected(null);
+      toast('Candidate deleted');
+    } catch(err) { toast(err.message, 'error'); }
+  };
+
+  const resetFilters = () => {
+    setFilterStatus('ALL');
+    if (jobs.length > 0) setSelectedJob(String(jobs[0].id));
+  };
+
   const filtered = filterStatus === 'ALL' ? results : results.filter(r => r.status === filterStatus);
 
   return (
@@ -48,7 +64,8 @@ export function Candidates({ initialJob }) {
           <div className="page-title">Candidates</div>
           <div className="page-sub">{results.length} screened · {results.filter(r=>r.status==='SHORTLISTED').length} shortlisted</div>
         </div>
-        <div style={{ display:'flex', gap:10 }}>
+        <div style={{ display:'flex', gap:10, alignItems: 'center' }}>
+          <button className="btn-secondary" style={{ padding: '6px 12px', fontSize: '13px' }} onClick={resetFilters}>Reset Filters</button>
           <select className="select-sm" value={selectedJob} onChange={e => setSelectedJob(e.target.value)}>
             <option value="">All Jobs</option>
             {jobs.map(j => <option key={j.id} value={j.id}>{j.title}</option>)}
@@ -83,13 +100,14 @@ export function Candidates({ initialJob }) {
                     <td><ScoreBar value={r.educationScore} /></td>
                     <td style={{fontFamily:'DM Mono,monospace',fontSize:12}}>{r.yearsExperience||0}y</td>
                     <td><span className={`badge badge-${r.status}`}>{r.status}</span></td>
-                    <td onClick={e => e.stopPropagation()}>
+                    <td onClick={e => e.stopPropagation()} style={{ display: 'flex', gap: '8px', alignItems: 'center' }}>
                       <select className="select-sm" value={r.status}
                               onChange={e => updateStatus(r.id, e.target.value)}>
                         {['SCREENED','SHORTLISTED','INTERVIEWED','OFFERED','HIRED','REJECTED'].map(s =>
                           <option key={s}>{s}</option>
                         )}
                       </select>
+                      <button className="btn-delete" onClick={(e) => deleteCandidate(r.id, e)} title="Delete candidate">✕</button>
                     </td>
                   </tr>
                 ))}

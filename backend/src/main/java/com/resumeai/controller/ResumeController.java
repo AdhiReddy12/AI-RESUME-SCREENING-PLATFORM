@@ -63,6 +63,12 @@ public class ResumeController {
         }).orElse(ResponseEntity.notFound().build());
     }
 
+    @DeleteMapping("/result/{id}")
+    public ResponseEntity<?> deleteCandidate(@PathVariable Long id) {
+        resumeService.deleteCandidate(id);
+        return ResponseEntity.ok().build();
+    }
+
     @GetMapping("/stats")
     public Map<String, Object> stats() {
         long total       = screenRepo.countTotal();

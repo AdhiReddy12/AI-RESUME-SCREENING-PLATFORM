@@ -140,4 +140,20 @@ public class ResumeService {
     private BigDecimal bd(Object v) { return BigDecimal.valueOf(toDouble(v)); }
 
     private String str(Object v) { return v == null ? "" : v.toString(); }
+
+    public void deleteCandidate(Long id) {
+        ScreeningResult result = screenRepo.findById(id).orElse(null);
+        if (result != null) {
+            Resume resume = result.getResume();
+            screenRepo.delete(result);
+            if (resume != null) {
+                resumeRepo.delete(resume);
+                try {
+                    Files.deleteIfExists(Paths.get(resume.getStoredPath()));
+                } catch (IOException e) {
+                    log.warn("Could not delete file: " + resume.getStoredPath());
+                }
+            }
+        }
+    }
 }

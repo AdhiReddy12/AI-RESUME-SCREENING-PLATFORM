@@ -123,6 +123,33 @@
 
     .btn-primary:disabled { opacity: 0.5; cursor: default; }
 
+    .btn-secondary {
+      background: transparent;
+      color: rgba(255,255,255,0.7);
+      border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: inherit;
+    }
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.05);
+      color: #fff;
+    }
+
+    .btn-delete {
+      background: transparent;
+      color: var(--accent);
+      border: none;
+      font-size: 16px;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity 0.2s;
+    }
+    .btn-delete:hover {
+      opacity: 1;
+    }
+
     .error-msg { color: var(--accent); font-size: 13px; margin-bottom: 14px; }
     .hint-text { margin-top: 16px; color: var(--muted); font-size: 12px; text-align: center; }
 
