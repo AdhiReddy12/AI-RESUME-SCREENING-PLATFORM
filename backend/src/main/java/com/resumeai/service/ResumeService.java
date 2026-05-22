@@ -163,4 +163,13 @@ public class ResumeService {
             }
         }
     }
+
+    public void deleteAllCandidates(Long jobId) {
+        List<ScreeningResult> results = (jobId != null) 
+                ? screenRepo.findByJobIdOrderByOverallScoreDesc(jobId) 
+                : screenRepo.findAllByOrderByOverallScoreDesc();
+        for (ScreeningResult result : results) {
+            deleteCandidate(result.getId());
+        }
+    }
 }

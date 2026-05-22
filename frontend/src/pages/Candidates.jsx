@@ -41,13 +41,33 @@ export function Candidates({ initialJob }) {
 
   const deleteCandidate = async (id, e) => {
     e.stopPropagation();
-    if (!window.confirm('Are you sure you want to delete this candidate?')) return;
+    if (!confirm('Are you sure you want to delete this candidate?')) return;
     try {
       await api.del(`/resumes/result/${id}`);
       setResults(p => p.filter(r => r.id !== id));
       if (selected?.id === id) setSelected(null);
       toast('Candidate deleted');
-    } catch(err) { toast(err.message, 'error'); }
+    } catch(e) {
+      toast(e.message, 'error');
+    }
+  };
+
+  const clearAllCandidates = async () => {
+    const msg = selectedJob 
+      ? 'Are you sure you want to clear ALL candidates for this specific job?' 
+      : 'Are you sure you want to clear ALL candidates across ALL jobs? This cannot be undone.';
+    if (!confirm(msg)) return;
+    
+    setLoading(true);
+    try {
+      const endpoint = selectedJob ? `/resumes/results?jobId=${selectedJob}` : `/resumes/results`;
+      await api.del(endpoint);
+      setResults([]);
+      toast('All candidates cleared');
+    } catch(e) {
+      toast(e.message, 'error');
+    }
+    setLoading(false);
   };
 
   const resetFilters = () => {
@@ -65,7 +85,12 @@ export function Candidates({ initialJob }) {
           <div className="page-sub">{results.length} screened · {results.filter(r=>r.status==='SHORTLISTED').length} shortlisted</div>
         </div>
         <div style={{ display:'flex', gap:10, alignItems: 'center' }}>
-          <button className="btn-secondary" style={{ padding: '6px 12px', fontSize: '13px' }} onClick={resetFilters}>Reset Filters</button>
+          <div style={{ display: 'flex', gap: 12 }}>
+            <button className="btn btn-outline" onClick={resetFilters}>Reset Filters</button>
+            <button className="btn btn-outline" style={{borderColor: 'rgba(255,100,100,0.3)', color: '#ff6b6b'}} onClick={clearAllCandidates}>
+              Clear All Candidates
+            </button>
+          </div>
           <select className="select-sm" value={selectedJob} onChange={e => setSelectedJob(e.target.value)}>
             <option value="">All Jobs</option>
             {jobs.map(j => <option key={j.id} value={j.id}>{j.title}</option>)}
