@@ -76,34 +76,4 @@ CREATE INDEX idx_screening_job_id      ON screening_results(job_id);
 CREATE INDEX idx_screening_score       ON screening_results(overall_score DESC);
 CREATE INDEX idx_screening_status      ON screening_results(status);
 
--- Seed data
-INSERT INTO users (email, password, full_name, role) VALUES
-  ('hr@resumeai.com',      '$2b$10$gqHI1FNH1WgDRL.fQweYEOOOqc9ZLyWV0qvSfnxWXjT0Dj9HM8nua', 'HR Admin',          'ADMIN'),
-  ('recruiter@resumeai.com','$2b$10$gqHI1FNH1WgDRL.fQweYEOOOqc9ZLyWV0qvSfnxWXjT0Dj9HM8nua', 'Jane Recruiter',     'RECRUITER'),
-  ('manager@resumeai.com',  '$2b$10$gqHI1FNH1WgDRL.fQweYEOOOqc9ZLyWV0qvSfnxWXjT0Dj9HM8nua', 'Bob Hiring Manager', 'HIRING_MANAGER');
--- password = "password" bcrypt
 
-INSERT INTO jobs (title, department, description, required_skills, preferred_skills, min_experience, education_level, keywords, shortlist_threshold, status, created_by) VALUES
-  ('Senior Java Developer', 'Engineering',
-   'We are looking for an experienced Java developer to join our backend team.',
-   'Java,Spring Boot,PostgreSQL,REST API',
-   'Docker,Kubernetes,Redis,Kafka',
-   4, 'BACHELORS',
-   'microservices,agile,ci/cd,junit,maven',
-   70, 'OPEN', 1),
-
-  ('Python ML Engineer', 'Data Science',
-   'Join our AI team to build and deploy machine learning models.',
-   'Python,Machine Learning,TensorFlow,SQL',
-   'PyTorch,FastAPI,Docker,AWS',
-   3, 'MASTERS',
-   'nlp,deep learning,transformers,pytorch,sklearn',
-   75, 'OPEN', 1),
-
-  ('React Frontend Developer', 'Engineering',
-   'Build beautiful and performant web interfaces.',
-   'React,JavaScript,HTML,CSS',
-   'TypeScript,Redux,GraphQL,Jest',
-   2, 'BACHELORS',
-   'responsive design,accessibility,webpack,node.js',
-   65, 'OPEN', 2);
