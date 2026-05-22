@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { api } from '../api';
 import { toast } from '../utils/toast';
 import { ScoreBar } from '../components/ScoreBar';
@@ -107,7 +108,9 @@ export function Candidates({ initialJob }) {
                           <option key={s}>{s}</option>
                         )}
                       </select>
-                      <button className="btn-delete" onClick={(e) => deleteCandidate(r.id, e)} title="Delete candidate">✕</button>
+                      <button className="btn-delete" onClick={(e) => deleteCandidate(r.id, e)} title="Delete candidate" style={{ display: 'flex', alignItems: 'center' }}>
+                        <DeleteIcon fontSize="small" />
+                      </button>
                     </td>
                   </tr>
                 ))}
