@@ -120,24 +120,32 @@ export function Jobs({ onSelectJob }) {
                        onChange={e => setForm(p => ({...p, requiredSkills: e.target.value}))} />
               </div>
               <div className="form-field full">
-                <label className="form-label">Preferred Skills</label>
-                <input className="form-input" value={form.preferredSkills}
-                       onChange={e => setForm(p => ({...p, preferredSkills: e.target.value}))} />
+                <label className="form-label">Min Experience (Years)</label>
+                <input className="form-input" type="number" min="0" value={form.minExperience}
+                       onWheel={(e) => e.target.blur()}
+                       onChange={e => setForm(p => ({...p, minExperience: +e.target.value}))} />
               </div>
               <div className="form-field full">
                 <label className="form-label">Keywords (for keyword scoring)</label>
                 <input className="form-input" value={form.keywords}
                        onChange={e => setForm(p => ({...p, keywords: e.target.value}))} />
               </div>
+              <div className="form-field full">
+                <label className="form-label">Preferred Skills</label>
+                <input className="form-input" value={form.preferredSkills}
+                       onChange={e => setForm(p => ({...p, preferredSkills: e.target.value}))} />
+              </div>
               <div style={{display:'flex', gap:16}} className="full">
                 <div className="form-field" style={{flex:1}}>
                   <label className="form-label">Shortlist Threshold (%)</label>
                   <input className="form-input" type="number" min="0" max="100" value={form.shortlistThreshold}
+                         onWheel={(e) => e.target.blur()}
                          onChange={e => setForm(p => ({...p, shortlistThreshold: +e.target.value}))} />
                 </div>
                 <div className="form-field" style={{flex:1}}>
                   <label className="form-label">Rejection Threshold (%)</label>
                   <input className="form-input" type="number" min="0" max="100" value={form.rejectionThreshold}
+                         onWheel={(e) => e.target.blur()}
                          onChange={e => setForm(p => ({...p, rejectionThreshold: +e.target.value}))} />
                 </div>
               </div>
