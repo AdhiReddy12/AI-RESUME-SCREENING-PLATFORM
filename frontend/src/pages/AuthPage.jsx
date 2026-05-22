@@ -92,7 +92,7 @@ export function AuthPage({ onLogin }) {
                      onChange={e=>setPassword(e.target.value)} onKeyDown={e=>e.key==='Enter'&&submit()} />
               <IconButton 
                 onClick={() => setShowPassword(!showPassword)}
-                style={{ position: 'absolute', right: 0, top: '2px', color: 'rgba(255,255,255,0.5)' }}
+                style={{ position: 'absolute', right: 0, top: '2px', color: 'var(--muted)' }}
               >
                 {showPassword ? <VisibilityOffIcon fontSize="small" /> : <VisibilityIcon fontSize="small" />}
               </IconButton>
@@ -113,8 +113,24 @@ export function AuthPage({ onLogin }) {
       </div>
       <div className="auth-right">
         <div className="auth-right-content">
-          <h2>Designed for individuals</h2>
-          <p>See the analytics and grow your data for Task remotely, from anywhere!</p>
+          <h2>The Future of Talent Acquisition</h2>
+          <p>Our AI-driven platform analyzes thousands of resumes in seconds, surfacing the perfect candidates without the manual screening.</p>
+          <div className="glass-card">
+            <div className="glass-stat">
+              <div className="glass-stat-icon">⚡</div>
+              <div className="glass-stat-info">
+                <div>10x Faster Screening</div>
+                <div>Reduce time-to-hire by automating initial resume reviews.</div>
+              </div>
+            </div>
+            <div className="glass-stat">
+              <div className="glass-stat-icon">🎯</div>
+              <div className="glass-stat-info">
+                <div>95% Match Accuracy</div>
+                <div>Advanced NLP identifies the exact skills you're looking for.</div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
       <Toast />
