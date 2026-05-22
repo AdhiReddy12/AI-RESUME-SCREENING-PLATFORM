@@ -1,0 +1,50 @@
+# --- OS / IDE ---
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.classpath
+.project
+.settings/
+*.iml
+.metadata/
+
+# --- Node / Frontend ---
+node_modules/
+dist/
+build/
+.npm
+.eslintcache
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# --- Python / AI Service ---
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.coverage
+venv/
+env/
+.venv/
+.env
+
+# --- Java / Backend ---
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+
+# --- Docker / DB Data / Local Mounts ---
+pg_data/
+resume_uploads/
+*.log
+
+# --- Graphify Knowledge Graph ---
+graphify-out/
