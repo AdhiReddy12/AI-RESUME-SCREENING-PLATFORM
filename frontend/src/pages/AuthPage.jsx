@@ -46,7 +46,7 @@ export function AuthPage({ onLogin }) {
       }
       const data = await res.json();
       onLogin(data);
-    } catch (e) {
+    } catch {
       setError('Cannot connect to server. Make sure the backend is running.');
     } finally {
       setLoading(false);

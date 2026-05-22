@@ -182,7 +182,7 @@ export function Candidates({ initialJob }) {
 
           {selected.matchedSkills && (() => {
             let skills = [];
-            try { skills = JSON.parse(selected.matchedSkills); } catch{}
+            try { skills = JSON.parse(selected.matchedSkills); } catch { /* ignore parse error */ }
             return skills.length ? (
               <div className="detail-section">
                 <div className="detail-section-title">Matched Skills</div>

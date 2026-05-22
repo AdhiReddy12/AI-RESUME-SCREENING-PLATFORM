@@ -10,7 +10,7 @@ from pathlib import Path
 
 import fitz  # PyMuPDF
 import docx
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from slowapi import Limiter, _rate_limit_exceeded_handler

@@ -61,9 +61,7 @@ export function Profile({ auth, setAuth }) {
     }
   };
 
-  const API_BASE = "http://localhost:8080"; // Need to get correct base if needed, or assume path is absolute.
-  // Actually, api.js exports API_BASE? Let's assume the url returned is relative, e.g., /api/users/profile/picture/...
-
+  // Removed unused API_BASE variable
   return (
     <div>
       <div className="page-header">

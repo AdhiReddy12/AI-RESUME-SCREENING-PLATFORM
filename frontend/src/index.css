@@ -449,8 +449,8 @@
       transition: all .15s;
       font-family: 'DM Sans', sans-serif;
     }
-    .btn-dark { background: var(--ink); color: #ffffff; }
-    .btn-dark:hover { background: var(--accent); }
+    .btn-dark { background: var(--ink); color: var(--paper); }
+    .btn-dark:hover { opacity: 0.9; }
     .btn-outline { background: transparent; border: 1px solid var(--border); color: var(--ink); }
     .btn-outline:hover { border-color: var(--ink); }
     .btn-sm { padding: 5px 12px; font-size: 11.5px; }
