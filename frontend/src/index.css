@@ -83,6 +83,16 @@
       border-radius: 0;
     }
 
+    /* Override browser autofill styles */
+    .field-input:-webkit-autofill,
+    .field-input:-webkit-autofill:hover, 
+    .field-input:-webkit-autofill:focus, 
+    .field-input:-webkit-autofill:active {
+      -webkit-box-shadow: 0 0 0 30px #0A0B10 inset !important;
+      -webkit-text-fill-color: white !important;
+      transition: background-color 5000s ease-in-out 0s;
+    }
+
     .field-input::placeholder {
       color: rgba(255, 255, 255, 0.3);
     }
