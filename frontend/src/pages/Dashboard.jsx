@@ -11,8 +11,8 @@ export function Dashboard() {
 
   useEffect(() => {
     api.get('/resumes/stats').then(setStats).catch(() => {
-      // mock stats if backend not running
-      setStats({ total: 142, shortlisted: 48, hired: 12, rejected: 31 });
+      // default to zero if backend not running or request fails
+      setStats({ total: 0, shortlisted: 0, hired: 0, rejected: 0, scoreDistribution: [0, 0, 0, 0, 0] });
     });
   }, []);
 
@@ -44,7 +44,7 @@ export function Dashboard() {
           labels: ['< 40', '40–59', '60–74', '75–89', '90+'],
           datasets: [{
             label: 'Candidates',
-            data: [8, 19, 35, 47, 33],
+            data: stats.scoreDistribution || [0, 0, 0, 0, 0],
             backgroundColor: '#0d0d0d',
             borderRadius: 2,
           }]

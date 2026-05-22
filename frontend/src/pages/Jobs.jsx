@@ -31,6 +31,10 @@ export function Jobs({ onSelectJob }) {
   };
 
   const save = async () => {
+    if (!form.title || !form.title.trim()) {
+      toast('Job Title is required', 'error');
+      return;
+    }
     try {
       if (editJob) { await api.put(`/jobs/${editJob.id}`, form); toast('Job updated'); }
       else         { await api.post('/jobs', form);              toast('Job created'); }
@@ -99,7 +103,7 @@ export function Jobs({ onSelectJob }) {
                 <div key={f.key} className={`form-field ${f.full ? 'full' : ''}`}>
                   <label className="form-label">{f.label}</label>
                   <input className="form-input" type={f.type||'text'} value={form[f.key]}
-                         onChange={e => setForm(p => ({...p, [f.key]: e.target.value}))} />
+                         onChange={e => setForm(p => ({...p, [f.key]: f.type === 'number' ? (e.target.value === '' ? 0 : +e.target.value) : e.target.value}))} />
                 </div>
               ))}
               <div className="form-field">
@@ -120,12 +124,6 @@ export function Jobs({ onSelectJob }) {
                 <label className="form-label">Required Skills (comma-separated)</label>
                 <input className="form-input" value={form.requiredSkills}
                        onChange={e => setForm(p => ({...p, requiredSkills: e.target.value}))} />
-              </div>
-              <div className="form-field full">
-                <label className="form-label">Min Experience (Years)</label>
-                <input className="form-input" type="number" min="0" value={form.minExperience}
-                       onWheel={(e) => e.target.blur()}
-                       onChange={e => setForm(p => ({...p, minExperience: +e.target.value}))} />
               </div>
               <div className="form-field full">
                 <label className="form-label">Keywords (for keyword scoring)</label>

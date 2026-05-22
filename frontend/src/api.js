@@ -10,10 +10,17 @@ export const api = {
   },
   async handleResponse(r) {
     if (!r.ok) {
+      if (r.status === 401 || r.status === 403) {
+        localStorage.removeItem('jwt_token');
+        localStorage.removeItem('jwt_user');
+        window.location.reload();
+        throw new Error("Session expired. Please log in again.");
+      }
       if (r.status === 429) {
         throw new Error("Too many requests. Please slow down and try again later.");
       }
-      throw new Error(await r.text());
+      const text = await r.text();
+      throw new Error(text || `Error ${r.status}: ${r.statusText || 'Request failed'}`);
     }
     const text = await r.text();
     return text ? JSON.parse(text) : null;
@@ -37,10 +44,17 @@ export const api = {
   async del(path) {
     const r = await fetch(API_BASE + path, { method: 'DELETE', headers: this.headers() });
     if (!r.ok) {
+      if (r.status === 401 || r.status === 403) {
+        localStorage.removeItem('jwt_token');
+        localStorage.removeItem('jwt_user');
+        window.location.reload();
+        throw new Error("Session expired. Please log in again.");
+      }
       if (r.status === 429) {
         throw new Error("Too many requests. Please slow down and try again later.");
       }
-      throw new Error(await r.text());
+      const text = await r.text();
+      throw new Error(text || `Error ${r.status}: ${r.statusText || 'Request failed'}`);
     }
     return r.ok;
   },

@@ -11,7 +11,7 @@ CREATE TABLE users (
     profile_picture VARCHAR(1000),
     company_name   VARCHAR(255),
     contact_number VARCHAR(50),
-    role           VARCHAR(50)  NOT NULL DEFAULT 'RECRUITER', -- ADMIN, RECRUITER, HIRING_MANAGER
+    role           VARCHAR(50)  NOT NULL DEFAULT 'RECRUITER', -- RECRUITER
     created_at     TIMESTAMP    NOT NULL DEFAULT NOW(),
     updated_at     TIMESTAMP    NOT NULL DEFAULT NOW()
 );

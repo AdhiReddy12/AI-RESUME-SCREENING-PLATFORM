@@ -21,8 +21,11 @@ public class JobController {
     private final ScreeningResultRepository screenRepo;
 
     @GetMapping
-    public List<Job> list() {
-        return jobRepo.findAllByOrderByCreatedAtDesc();
+    public List<Job> list(@AuthenticationPrincipal User user) {
+        if (user == null) {
+            return List.of();
+        }
+        return jobRepo.findByCreatedByIdOrderByCreatedAtDesc(user.getId());
     }
 
     @GetMapping("/{id}")

@@ -7,4 +7,5 @@ import java.util.List;
 public interface JobRepository extends JpaRepository<Job, Long> {
     List<Job> findByStatusOrderByCreatedAtDesc(Job.Status status);
     List<Job> findAllByOrderByCreatedAtDesc();
+    List<Job> findByCreatedByIdOrderByCreatedAtDesc(Long createdById);
 }

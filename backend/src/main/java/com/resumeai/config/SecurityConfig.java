@@ -28,6 +28,12 @@ public class SecurityConfig {
                 .csrf(c -> c.disable())
                 .cors(c -> c.configurationSource(corsSource()))
                 .sessionManagement(s -> s.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .exceptionHandling(e -> e.authenticationEntryPoint(
+                        (request, response, authException) -> response.sendError(
+                                jakarta.servlet.http.HttpServletResponse.SC_UNAUTHORIZED,
+                                "Unauthorized"
+                        )
+                ))
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers("/api/auth/**", "/api/api-docs/**",
                                          "/api/swagger-ui/**", "/api/swagger-ui.html", 

@@ -23,13 +23,25 @@
       min-height: 100vh;
     }
     
-    /* Hide scrollbars but keep scrolling functionality */
+    /* Custom Scrollbar for premium dark-themed design */
     ::-webkit-scrollbar {
-      display: none;
+      width: 8px;
+      height: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--paper);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--cream);
+      border-radius: 4px;
+      border: 2px solid var(--paper);
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--muted);
     }
     * {
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
+      scrollbar-width: thin;
+      scrollbar-color: var(--cream) var(--paper);
     }
 
     /* Hide number input spinners globally */
