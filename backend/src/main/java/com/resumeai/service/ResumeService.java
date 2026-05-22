@@ -52,7 +52,7 @@ public class ResumeService {
         Map<String, Object> jobDetails = buildJobDetails(job);
         Map<String, Object> aiResult = aiClient.screen(stored.toString(), jobDetails);
 
-        return persistResult(resume, job, aiResult, job.getShortlistThreshold());
+        return persistResult(resume, job, aiResult);
     }
 
     public List<ScreeningResult> bulkUploadAndScreen(MultipartFile[] files, Long jobId, User uploader) throws IOException {
@@ -84,7 +84,7 @@ public class ResumeService {
 
         List<ScreeningResult> results = new ArrayList<>();
         for (int i = 0; i < resumes.size() && i < aiResults.size(); i++) {
-            results.add(persistResult(resumes.get(i), job, aiResults.get(i), job.getShortlistThreshold()));
+            results.add(persistResult(resumes.get(i), job, aiResults.get(i)));
         }
         return results;
     }
@@ -102,13 +102,17 @@ public class ResumeService {
     }
 
     private ScreeningResult persistResult(Resume resume, Job job,
-                                          Map<String, Object> ai, int threshold) {
+                                          Map<String, Object> ai) {
         double overall = toDouble(ai.get("overall_score"));
-        boolean shortlisted = overall >= threshold;
-
-        ScreeningResult.CandidateStatus status = shortlisted
-                ? ScreeningResult.CandidateStatus.SHORTLISTED
-                : ScreeningResult.CandidateStatus.SCREENED;
+        
+        ScreeningResult.CandidateStatus status;
+        if (overall >= job.getShortlistThreshold()) {
+            status = ScreeningResult.CandidateStatus.SHORTLISTED;
+        } else if (overall < job.getRejectionThreshold()) {
+            status = ScreeningResult.CandidateStatus.REJECTED;
+        } else {
+            status = ScreeningResult.CandidateStatus.SCREENED;
+        }
 
         ScreeningResult sr = ScreeningResult.builder()
                 .resume(resume).job(job)

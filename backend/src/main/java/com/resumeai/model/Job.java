@@ -42,6 +42,9 @@ public class Job {
     @Column(name = "shortlist_threshold")
     private Integer shortlistThreshold = 70;
 
+    @Column(name = "rejection_threshold")
+    private Integer rejectionThreshold = 40;
+
     @Column(nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status = Status.OPEN;

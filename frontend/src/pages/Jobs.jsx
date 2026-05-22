@@ -7,7 +7,7 @@ export function Jobs({ onSelectJob }) {
   const [loading, setLoading] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [editJob, setEditJob] = useState(null);
-  const blank = { title:'', department:'', description:'', requiredSkills:'', preferredSkills:'', minExperience:0, educationLevel:'BACHELORS', keywords:'', shortlistThreshold:70, status:'OPEN' };
+  const blank = { title:'', department:'', description:'', requiredSkills:'', preferredSkills:'', minExperience:0, educationLevel:'BACHELORS', keywords:'', shortlistThreshold:70, rejectionThreshold:40, status:'OPEN' };
   const [form, setForm] = useState(blank);
 
   const load = () => {
@@ -22,6 +22,7 @@ export function Jobs({ onSelectJob }) {
               requiredSkills: j.requiredSkills||'', preferredSkills: j.preferredSkills||'',
               minExperience: j.minExperience||0, educationLevel: j.educationLevel||'BACHELORS',
               keywords: j.keywords||'', shortlistThreshold: j.shortlistThreshold||70,
+              rejectionThreshold: j.rejectionThreshold||40,
               status: j.status });
     setEditJob(j);
     setShowModal(true);
@@ -71,7 +72,7 @@ export function Jobs({ onSelectJob }) {
               <div className="job-card-meta">
                 <span>🎓 {j.educationLevel}</span>
                 <span>⏱ {j.minExperience}+ yrs</span>
-                <span>🎯 {j.shortlistThreshold}% threshold</span>
+                <span>🎯 {j.shortlistThreshold}% shortlist / ❌ {j.rejectionThreshold}% reject</span>
               </div>
               <div style={{ display:'flex', gap:8, marginTop:16 }}>
                 <button className="btn btn-outline btn-sm" onClick={() => onSelectJob(j)}>View Candidates</button>
@@ -128,10 +129,17 @@ export function Jobs({ onSelectJob }) {
                 <input className="form-input" value={form.keywords}
                        onChange={e => setForm(p => ({...p, keywords: e.target.value}))} />
               </div>
-              <div className="form-field">
-                <label className="form-label">Shortlist Threshold (%)</label>
-                <input className="form-input" type="number" min="0" max="100" value={form.shortlistThreshold}
-                       onChange={e => setForm(p => ({...p, shortlistThreshold: +e.target.value}))} />
+              <div style={{display:'flex', gap:16}} className="full">
+                <div className="form-field" style={{flex:1}}>
+                  <label className="form-label">Shortlist Threshold (%)</label>
+                  <input className="form-input" type="number" min="0" max="100" value={form.shortlistThreshold}
+                         onChange={e => setForm(p => ({...p, shortlistThreshold: +e.target.value}))} />
+                </div>
+                <div className="form-field" style={{flex:1}}>
+                  <label className="form-label">Rejection Threshold (%)</label>
+                  <input className="form-input" type="number" min="0" max="100" value={form.rejectionThreshold}
+                         onChange={e => setForm(p => ({...p, rejectionThreshold: +e.target.value}))} />
+                </div>
               </div>
               <div className="form-field full">
                 <label className="form-label">Job Description</label>
